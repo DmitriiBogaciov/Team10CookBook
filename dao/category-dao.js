@@ -46,6 +46,21 @@ class CategoryDao {
     _getStorageLocation() {
         return this.categoryStoragePath;
     }
+
+    delete(categoryId) {
+        let categoryList = this._listAll();
+        const index = categoryList.findIndex(item => item.id === categoryId);
+        if (index === -1) {
+            throw new Error(`Category with ID ${categoryId} does not exist`);
+        }
+        categoryList.splice(index, 1);
+        try {
+            fs.writeFileSync(this._getStorageLocation(), JSON.stringify(categoryList));
+        } catch(e) {
+            throw new Error("Unable to write to storage. " + this._getStorageLocation())
+        }
+    }
+
 }
 
 module.exports = CategoryDao;
