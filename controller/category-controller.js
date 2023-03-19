@@ -19,7 +19,7 @@ router.post("/create", (req, res) => {
     CreateAbl(req, res);
 })
 
-router.post("/delete", (req, res) => {
+router.delete("/delete", (req, res) => {
     DeleteAbl(req, res);
 })
 
