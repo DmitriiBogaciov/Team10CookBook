@@ -8,16 +8,17 @@ const ajv = new Ajv();
 const schema = {
     type: "object",
     properties: {
+        id: {type: "string"},
         name: { type: "string"},
         description: { type: "string"},
-        categoryId: {type: "string"}
+        categoryId: {type: "string"},
     },
-    required: ["name", "description", "categoryId"],
+    required: ["id"],
     additionalProperties: false,
 
 }
 
-function CreateAbl(req, res) {
+function UpdateAbl(req, res) {
     try {
         const valid = ajv.validate(schema, req.body);
         if (!valid) {
@@ -28,7 +29,7 @@ function CreateAbl(req, res) {
             })
         }
         let recipe = req.body;
-        recipe = dao.create(recipe);
+        recipe = dao.update(recipe);
         res.json(recipe);
     }   catch (e) {
         console.error(e);
@@ -36,4 +37,4 @@ function CreateAbl(req, res) {
     }
 }
 
-module.exports = CreateAbl
+module.exports = UpdateAbl

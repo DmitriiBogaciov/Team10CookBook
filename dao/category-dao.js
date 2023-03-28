@@ -60,7 +60,6 @@ class CategoryDao {
             throw new Error("Unable to write to storage. " + this._getStorageLocation())
         }
     }
-
 }
 
 module.exports = CategoryDao;
