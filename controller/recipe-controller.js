@@ -4,12 +4,17 @@ const ListAbl = require("../abl/recipe/list-abl");
 const GetAbl = require("../abl/recipe/get-abl");
 const DeleteAbl = require("../abl/recipe/delete-abl")
 const UpdateAbl = require("../abl/recipe/update-abl")
+const ListByCategoryId = require("../abl/recipe/listByCategoryId-abl")
 
 const router = express.Router();
 
 
 router.get("/list", (req, res) => {
     ListAbl(req, res);
+})
+
+router.get("/listByCategoryId", (req, res) => {
+    ListByCategoryId(req, res);
 })
 
 router.get("/get", (req, res) => {

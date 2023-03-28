@@ -73,6 +73,10 @@ class RecipeDao{
         }
         return recipe;
     }
+    findByCategoryId(categoryId) {
+        let recipeList = this._listAll();
+        return recipeList.filter(item => item.categoryId === categoryId);
+    }
 }
 
 module.exports = RecipeDao;
