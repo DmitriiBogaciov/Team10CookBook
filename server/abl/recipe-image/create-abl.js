@@ -13,7 +13,7 @@ async function CreateAbl(busboy, res) {
 
     busboy.on("file", async (fieldname, file, filename, encoding, mimetype) => {
         const ajv = new Ajv();
-        const valid = ajv.validate(createBookImageSchema, dtoIn);
+        const valid = ajv.validate(createRecipeImageSchema, dtoIn);
 
         if (!valid) {
             return res.status(400).json({error: ajv.errors});
