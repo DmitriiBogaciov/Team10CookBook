@@ -3,7 +3,7 @@ const fs = require("fs");
 const Ajv = require("ajv");
 const RecipeDao = require("../../dao/recipe-dao")
 const dao = new RecipeDao(path.join(__dirname, "..", "..", "storage", "recipe.json"))
-const { createRecipeImageSchema } = require("../../shemas/book-image-schemas");
+const { createRecipeImageSchema } = require("../../shemas/recipe-image-schemas");
 
 async function CreateAbl(busboy, res) {
     let dtoIn = {};
