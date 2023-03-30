@@ -1,11 +1,11 @@
 const path = require("path");
 const fs = require("fs");
 const Ajv = require("ajv");
-const { getBoolImageSchema } = require("../../schemas/book-image-schemas")
+const { getRecipeImageSchema } = require("../../shemas/recipe-image-schemas")
 
 async function GetAbl(query, res) {
     const ajv = new Ajv();
-    const valid = ajv.validate(getBookImageSchema, query);
+    const valid = ajv.validate(getRecipeImageSchema, query);
 
     if (!valid) {
         return res.status(400).json({error: ajv.errors});
