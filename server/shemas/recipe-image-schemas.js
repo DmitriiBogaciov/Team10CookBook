@@ -11,7 +11,7 @@ const getRecipeImageSchema = {
 const createRecipeImageSchema = {
     "type": "object",
     "properties": {
-        "code": { "type": "string"},
+        "code": { "type": "string"}
     },
     "required": ["code"]
 };

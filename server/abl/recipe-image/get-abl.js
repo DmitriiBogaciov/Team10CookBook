@@ -11,7 +11,7 @@ async function GetAbl(query, res) {
         return res.status(400).json({error: ajv.errors});
     }
 
-    let pathToImage = path.join(__dirname, "..", "..", "storage", query.code + ".png");
+    let pathToImage = path.join(__dirname, "..", "..", "storage/recipe-image", query.code + ".png");
 
     try {
         await fs.promises.access(pathToImage, fs.F_OK);
