@@ -27,6 +27,10 @@ async function CreateAbl(busboy, res) {
         if (mimetype !== "image/png") {
             return res.status(400).json({error: `Only supported mimetype is image/png`});
         }
+
+        let saveTo = path.join(__dirname, "..", "..", "storage/recipe-image", dtoIn.code + ".png");
+        let writeStream = fs.createWriteStream(saveTo);
+        file.pipe(writeStream);
     });
 
     busboy.on("finish", function() {

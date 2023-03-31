@@ -17,26 +17,6 @@ app.get("/", (req, res)=> {
     res.send("Hello World");
 })
 
-// //configuration for Busboy
-// app.post("/recipeImage/create", (req, res) => {
-//     let busboy = new Busboy({headers: req.headers, limits: {files: 1}});
-//
-//     busboy.on("file", function(fieldname, file, filename, encoding, mimetype) {
-//         let saveTo = path.join(__dirname, "storage/recipe-image", filename);
-//         let writeStream = fs.createWriteStream(saveTo);
-//         file.pipe(writeStream);
-//     });
-//     busboy.on("finish", function() {
-//         console.log("File uploaded")
-//         res.json({ status: "File successfully uploaded!" });
-//     });
-//     busboy.on("error", err => {
-//         res.json({error: err})
-//     });
-//     req.pipe(busboy);
-// });
-// //Busboy end
-
 app.use("/category", categoryRouter);
 app.use("/recipe", recipeRouter)
 app.use("/ingredient", ingredientRouter)
