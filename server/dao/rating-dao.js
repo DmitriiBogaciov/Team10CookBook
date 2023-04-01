@@ -1,6 +1,5 @@
 "use strict";
 const fs = require("fs");
-const path = require("path");
 const crypto = require("crypto");
 
 class RatingDao {
@@ -38,8 +37,21 @@ class RatingDao {
         return ratingList;
     }
 
+    get(id) {
+        let ratingList = this._listAll();
+        return ratingList.find(item => item.id ===id);
+    }
+
     _getStorageLocation(){
         return this.ratingStoragePath;
+    }
+
+    getRecipeAverageRating(recipeId) {
+        let ratingList = this._listAll();
+        ratingList = ratingList.filter(item => item.recipeId === recipeId);
+        const ratingSum = ratingList.reduce((sum, item) => sum + item.value, 0);
+        const averageRating = ratingSum / ratingList.length;
+        return averageRating.toFixed(1);
     }
 }
 

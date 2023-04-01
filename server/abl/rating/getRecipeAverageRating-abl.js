@@ -5,10 +5,10 @@ const dao = new RatingDao(path.join(__dirname, "..", "..", "storage", "rating.js
 
 function GetAbl(req, res) {
     try {
-        const rating = dao.get(req.query.id);
+        const rating = dao.getRecipeAverageRating(req.query.recipeId);
         if (!rating) {
             res.status(400).send({
-                errorMessage: "recipe does not exist",
+                errorMessage: "rating does not exist",
                 params: req.query
             })
         }
@@ -17,7 +17,6 @@ function GetAbl(req, res) {
         console.error(e);
         res.status(500).send(e)
     }
-
 }
 
 module.exports = GetAbl;
