@@ -41,6 +41,20 @@ class RatingDao {
     _getStorageLocation(){
         return this.ratingStoragePath;
     }
+
+    delete(ratingId) {
+        let ratingList = this._listAll();
+        const index = ratingList.findIndex(item => item.id === ratingId);
+        if (index === -1) {
+            throw new Error(`Category with ID ${ratingId} does not exist`);
+        }
+        ratingList.splice(index, 1);
+        try {
+            fs.writeFileSync(this._getStorageLocation(), JSON.stringify(ratingList));
+        } catch(e) {
+            throw new Error("Unable to write to storage. " + this._getStorageLocation())
+        }
+    }
 }
 
 module.exports = RatingDao;

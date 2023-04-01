@@ -12,7 +12,8 @@ const schema = {
         name: { type: "string"},
         description: { type: "string"},
         categoryId: {type: "string"},
-        imageId: {type: "string"}
+        imageId: {type: "string"},
+        ratingId: {type: "string"}
     },
     required: ["id"],
     additionalProperties: false,

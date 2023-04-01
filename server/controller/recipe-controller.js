@@ -29,7 +29,7 @@ router.delete("/delete", (req, res) => {
     DeleteAbl(req, res);
 })
 
-router.post("/update", (req, res) => {
+router.put("/update", (req, res) => {
     UpdateAbl(req, res);
 })
 

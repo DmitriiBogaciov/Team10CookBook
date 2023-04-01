@@ -1,37 +1,38 @@
 const path = require("path");
 const Ajv = require("ajv");
-const RatingDao = require("../../dao/rating-dao");
-const dao = new RatingDao(path.join(__dirname, "..", "..", "storage", "rating.json"));
+const IngredientDao = require("../../dao/rating-dao")
+const dao = new IngredientDao(path.join(__dirname, "..", "..", "storage", "rating.json"))
 
-const ajv = new Ajv;
+const ajv = new Ajv();
 
 const schema = {
     type: "object",
     properties: {
-        recipeId: {type: "string"},
-        vault: {type: "string"}
+        id: { type: "string" }
     },
-    required: ["name"],
+    required: ["id"],
     additionalProperties: false,
 }
 
-function CreateAbl(req, res) {
-    try{
+function DeleteAbl(req, res) {
+    try {
         const valid = ajv.validate(schema, req.body);
-        if(!valid) {
+        if (!valid) {
             res.status(400).send({
                 errorMessage: "validation of input data",
                 params: req.body,
                 reason: ajv.errors,
             })
         }
-        let rating = req.body;
-        rating = dao.create(rating);
-        res.json(rating)
-    }   catch (e) {
+        const ratingId = req.body.id;
+        dao.delete(ratingId);
+        res.json({
+            message: `Ingredient with id ${ratingId} deleted successfully.`
+        });
+    } catch (e) {
         console.error(e);
         res.status(500).send(e)
     }
 }
 
-module.exports = CreateAbl
+module.exports = DeleteAbl;
