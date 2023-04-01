@@ -11,6 +11,7 @@ class RecipeDao{
     create(recipe) {
         let recipeList = this._listAll();
         recipe.id = crypto.randomBytes(8).toString("hex");
+        recipe.categoryIdList = Array.isArray(recipe.categoryIdList) ? recipe.categoryIdList : [recipe.categoryIdList];
         recipeList.push(recipe);
         try {
             fs.writeFileSync(this._getStorageLocation(), JSON.stringify(recipeList));
@@ -46,7 +47,6 @@ class RecipeDao{
         }
         return recipeList;
     }
-
     delete(recipeId) {
         let recipeList = this._listAll();
         const index = recipeList.findIndex(item => item.id === recipeId);
@@ -60,25 +60,29 @@ class RecipeDao{
             throw new Error("Unable to write to storage. " + this._getStorageLocation())
         }
     }
-
     update(recipe){
         let recipeList = this._listAll();
         const index = recipeList.findIndex(item => item.id === recipe.id);
         if (index === -1) {
             throw new Error(`Recipe with ID ${recipe.id} does not exist`);
         }
-        recipeList[index] = { ...recipeList[index], ...recipe };
+        recipeList[index] = recipe;
         try {
             fs.writeFileSync(this._getStorageLocation(), JSON.stringify(recipeList));
         } catch(e) {
             throw new Error("Unable to write to storage. " + this._getStorageLocation())
         }
-        return recipeList[index];
+        return recipe;
     }
-
     findByCategoryId(categoryId) {
         let recipeList = this._listAll();
-        return recipeList.filter(item => item.categoryId === categoryId);
+        return recipeList.filter(item => {
+            if (Array.isArray(item.categoryIdList)) {
+                return item.categoryIdList.includes(categoryId);
+            } else {
+                return item.categoryIdList === categoryId;
+            }
+        });
     }
 }
 
