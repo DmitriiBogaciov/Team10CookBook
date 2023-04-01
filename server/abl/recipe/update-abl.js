@@ -13,7 +13,7 @@ const schema = {
         description: { type: "string"},
         categoryIdList: { type: "array", items: { type: "string" } },
         imageId: {type: "string"},
-        recipeIdList: { type: "array", items: { type: "string" } }
+        ingredientIdList: { type: "array", items: { type: "string" } }
     },
     required: ["id"],
     additionalProperties: false,
