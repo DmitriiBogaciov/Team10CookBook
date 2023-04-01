@@ -60,19 +60,19 @@ class RecipeDao{
             throw new Error("Unable to write to storage. " + this._getStorageLocation())
         }
     }
-    update(recipe){
-        let recipeList = this._listAll();
+    update(recipe) {
+        const recipeList = this._listAll();
         const index = recipeList.findIndex(item => item.id === recipe.id);
         if (index === -1) {
             throw new Error(`Recipe with ID ${recipe.id} does not exist`);
         }
-        recipeList[index] = recipe;
+        recipeList[index] = Object.assign({}, recipeList[index], recipe);
         try {
             fs.writeFileSync(this._getStorageLocation(), JSON.stringify(recipeList));
         } catch(e) {
             throw new Error("Unable to write to storage. " + this._getStorageLocation())
         }
-        return recipe;
+        return recipeList[index];
     }
     findByCategoryId(categoryId) {
         let recipeList = this._listAll();
