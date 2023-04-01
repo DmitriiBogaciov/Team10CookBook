@@ -1,36 +1,33 @@
 const path = require("path");
 const Ajv = require("ajv");
-const RecipeDao = require("../../dao/recipe-dao")
-const dao = new RecipeDao(path.join(__dirname, "..", "..", "storage", "recipe.json"))
+const RatingDao = require("../../dao/rating-dao");
+const dao = new RatingDao(path.join(__dirname, "..", "..", "storage", "rating.json"));
 
-const ajv = new Ajv();
+const ajv = new Ajv;
 
 const schema = {
     type: "object",
     properties: {
-        name: { type: "string"},
-        description: { type: "string"},
-        categoryId: {type: "string"},
-        imageId: {type: "string"}
+        recipeId: {type: "string"},
+        vault: {type: "string"}
     },
-    required: ["name", "description", "categoryId", "imageId"],
+    required: ["name"],
     additionalProperties: false,
-
 }
 
 function CreateAbl(req, res) {
-    try {
+    try{
         const valid = ajv.validate(schema, req.body);
-        if (!valid) {
+        if(!valid) {
             res.status(400).send({
                 errorMessage: "validation of input data",
                 params: req.body,
                 reason: ajv.errors,
             })
         }
-        let recipe = req.body;
-        recipe = dao.create(recipe);
-        res.json(recipe);
+        let rating = req.body;
+        rating = dao.create(rating);
+        res.json(rating)
     }   catch (e) {
         console.error(e);
         res.status(500).send(e)

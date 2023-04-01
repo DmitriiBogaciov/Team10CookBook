@@ -3,9 +3,7 @@ const categoryRouter = require("./controller/category-controller");
 const recipeRouter = require("./controller/recipe-controller");
 const ingredientRouter = require("./controller/ingredient-controller");
 const recipeImageRouter = require("./controller/recipe-image-controller")
-const Busboy = require("busboy");
-const path = require("path");
-const fs = require("fs")
+const ratingRouter = require("./controller/rating-controller")
 
 const app = express();
 const port = 3000;
@@ -18,9 +16,10 @@ app.get("/", (req, res)=> {
 })
 
 app.use("/category", categoryRouter);
-app.use("/recipe", recipeRouter)
-app.use("/ingredient", ingredientRouter)
-app.use("/recipeImage", recipeImageRouter)
+app.use("/recipe", recipeRouter);
+app.use("/ingredient", ingredientRouter);
+app.use("/recipeImage", recipeImageRouter);
+app.use("/rating", ratingRouter);
 
 app.all("/*", (req, res)=> {
     res.status(400).send("Unknown path");

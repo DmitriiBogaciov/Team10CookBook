@@ -12,10 +12,10 @@ const schema = {
         name: { type: "string"},
         description: { type: "string"},
         categoryId: {type: "string"},
+        imageId: {type: "string"}
     },
     required: ["id"],
     additionalProperties: false,
-
 }
 
 function UpdateAbl(req, res) {
