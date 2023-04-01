@@ -12,9 +12,9 @@ const schema = {
         description: { type: "string"},
         categoryIdList: { type: "array", items: { type: "string" } },
         imageId: {type: "string"},
-        recipeIdList: { type: "array", items: { type: "string" } }
+        ingredientIdList: { type: "array", items: { type: "string" } }
     },
-    required: ["name", "description", "categoryIdList", "imageId"],
+    required: ["name", "description", "categoryIdList", "imageId", "ingredientIdList"],
     additionalProperties: false,
 }
 
