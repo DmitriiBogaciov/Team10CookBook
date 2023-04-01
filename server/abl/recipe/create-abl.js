@@ -10,12 +10,11 @@ const schema = {
     properties: {
         name: { type: "string"},
         description: { type: "string"},
-        categoryId: {type: "string"},
+        categoryIdList: { type: "array", items: { type: "string" } },
         imageId: {type: "string"}
     },
-    required: ["name", "description", "categoryId", "imageId"],
+    required: ["name", "description", "categoryIdList", "imageId"],
     additionalProperties: false,
-
 }
 
 function CreateAbl(req, res) {
@@ -29,6 +28,7 @@ function CreateAbl(req, res) {
             })
         }
         let recipe = req.body;
+        recipe.categoryIdList = Array.isArray(recipe.categoryIdList) ? recipe.categoryIdList : [recipe.categoryIdList];
         recipe = dao.create(recipe);
         res.json(recipe);
     }   catch (e) {
