@@ -2,6 +2,8 @@ const path = require("path");
 const Ajv = require("ajv");
 const RecipeDao = require("../../dao/recipe-dao")
 const dao = new RecipeDao(path.join(__dirname, "..", "..", "storage", "recipe.json"))
+const IngredientDao = require("../../dao/ingredient-dao");
+const ingredientDao = new IngredientDao(path.join(__dirname, "..", "..", "storage", "ingredient.json"));
 
 const ajv = new Ajv();
 
@@ -13,7 +15,21 @@ const schema = {
         description: { type: "string"},
         categoryIdList: { type: "array", items: { type: "string" } },
         imageId: {type: "string"},
-        ingredientIdList: { type: "array", items: { type: "string" } }
+        ingredientList: {
+            type: "array",
+            minItems: 0,
+            items: [
+                {
+                    type: "object",
+                    properties: {
+                        id: { type: "string" },
+                        amount: { type: "number" },
+                        unit: { type: "string" },
+                    },
+                    required: ["id", "amount", "unit"],
+                }
+            ]
+        }
     },
     required: ["id"],
     additionalProperties: false,
@@ -30,6 +46,17 @@ function UpdateAbl(req, res) {
             })
         }
         let recipe = req.body;
+        for(let ingredient of recipe.ingredientList) {
+            const exists = ingredientDao.get(ingredient.id);
+
+            if (!exists) {
+                res.status(400).send({
+                    errorMessage: "ingredient with id " + ingredient.id + " does not exist",
+                    params: req.body,
+                });
+                return;
+            }
+        }
         recipe = dao.update(recipe);
         res.json(recipe);
     }   catch (e) {
