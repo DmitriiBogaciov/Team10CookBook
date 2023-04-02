@@ -47,11 +47,27 @@ class IngredientDao {
         return this.ingredientStoragePath;
     }
 
+    update(ingredient){
+        let ingredientList = this._listAll();
+        const index = ingredientList.findIndex(item => item.id === ingredient.id);
+        if (index === -1) {
+            throw new Error(`Ingredient with ID ${ingredientId} does not exist`);
+        }
+        ingredientList[index] = Object.assign({}, ingredientList[index], ingredient);
+        try {
+            fs.writeFileSync(this._getStorageLocation(), JSON.stringify(ingredientList));
+        } catch(e) {
+            throw new Error("Unable to write to storage. " + this._getStorageLocation())
+        }
+        return ingredientList[index];
+
+    }
+
     delete(ingredientId) {
         let ingredientList = this._listAll();
         const index = ingredientList.findIndex(item => item.id === ingredientId);
         if (index === -1) {
-            throw new Error(`Category with ID ${ingredientId} does not exist`);
+            throw new Error(`Ingredient with ID ${ingredientId} does not exist`);
         }
         ingredientList.splice(index, 1);
         try {

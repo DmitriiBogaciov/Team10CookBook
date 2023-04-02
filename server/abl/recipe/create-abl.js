@@ -37,28 +37,31 @@ const schema = {
 function CreateAbl(req, res) {
     try {
         const valid = ajv.validate(schema, req.body);
-        if (!valid) {
+        if (valid) {
+            let recipe = req.body;
+
+            for(let ingredient of recipe.ingredientList) {
+                const exists = ingredientDao.get(ingredient.id);
+
+                if (!exists) {
+                    res.status(400).send({
+                        errorMessage: "ingredient with id " + ingredient.id + " does not exist",
+                        params: req.body,
+                    });
+                    return;
+                }
+            }
+            recipe.categoryIdList = Array.isArray(recipe.categoryIdList) ? recipe.categoryIdList : [recipe.categoryIdList];
+            recipe = dao.create(recipe);
+            res.json(recipe);
+        } else {
             res.status(400).send({
                 errorMessage: "validation of input data",
                 params: req.body,
                 reason: ajv.errors,
             })
         }
-        let recipe = req.body;
-        for(let ingredient of recipe.ingredientList) {
-            const exists = ingredientDao.get(ingredient.id);
 
-            if (!exists) {
-                res.status(400).send({
-                    errorMessage: "ingredient with id " + ingredient.id + " does not exist",
-                    params: req.body,
-                });
-                return;
-            }
-        }
-        recipe.categoryIdList = Array.isArray(recipe.categoryIdList) ? recipe.categoryIdList : [recipe.categoryIdList];
-        recipe = dao.create(recipe);
-        res.json(recipe);
     }   catch (e) {
         console.error(e);
         res.status(500).send(e)
