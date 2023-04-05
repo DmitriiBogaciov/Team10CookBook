@@ -7,7 +7,7 @@ function RecipeList(props) {
             return <Recipe recipe = {recipe}/>
         })
     }
-    return getRecipeList(props.studentList)
+    return getRecipeList(props.recipeList)
 }
 
 export default RecipeList

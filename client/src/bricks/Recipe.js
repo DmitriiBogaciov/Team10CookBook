@@ -1,12 +1,19 @@
-import React from "react"
+import React from "react";
+import Card from 'react-bootstrap/Card';
+import Icon from '@mdi/react';
+import { mdiGlassTulip } from '@mdi/js';
 
 function Recipe(props) {
     return (
-        <div key={props.recipe.id}>
-            <div>{props.recipe.name}</div>
-            <div>{props.recipe.description}</div>
-        </div>
-    )
+       <Card>
+           <Card.Body>
+               <div>
+                   <Icon path={mdiGlassTulip} size={1} color="red" />{" "}
+                   {props.recipe.name} {props.recipe.description}
+               </div>
+           </Card.Body>
+       </Card>
+    );
 }
 
 export default Recipe;

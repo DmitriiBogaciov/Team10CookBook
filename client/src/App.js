@@ -1,5 +1,6 @@
 import './App.css';
 import RecipeList from "./bricks/RecipeList"
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const recipeList = [
   {"id": "1",
