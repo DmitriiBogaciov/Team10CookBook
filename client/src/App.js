@@ -1,25 +1,32 @@
-import logo from './logo.svg';
 import './App.css';
+import RecipeList from "./bricks/RecipeList"
+
+const recipeList = [
+  {"id": "1",
+   "name": "Stress killer",
+   "description": "abc"
+  },
+  {"id": "2",
+    "name": "Immunity",
+    "description": "abc"
+  },
+  {"id": "3",
+    "name": "Me2ed",
+    "description": "abc"
+  },
+  {"id": "4",
+    "name": "Pretty woman",
+    "description": "abc"
+  },
+]
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <RecipeList recipeList={recipeList}/>
     </div>
   );
 }
+
 
 export default App;
