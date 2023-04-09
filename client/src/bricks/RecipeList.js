@@ -21,7 +21,7 @@ function RecipeList(props) {
                 item.description.toLocaleLowerCase().includes(searchBy.toLocaleLowerCase())
             );
         });
-    }, [searchBy]);
+    }, [searchBy, props.recipeList]);
 
     function handleSearch(event) {
         event.preventDefault();
@@ -36,7 +36,7 @@ function RecipeList(props) {
         <div>
             <Navbar bg="light">
                 <div className="container-fluid">
-                    <Navbar.Brand>Seznam receptu</Navbar.Brand>
+                    <Navbar.Brand>Recipes list</Navbar.Brand>
                     <div>
                         <Form className="d-flex" onSubmit={handleSearch}>
                             <Form.Control

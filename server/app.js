@@ -6,7 +6,7 @@ const recipeImageRouter = require("./controller/recipe-image-controller")
 const ratingRouter = require("./controller/rating-controller")
 
 const app = express();
-const port = 3000;
+const port = 8000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
