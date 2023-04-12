@@ -21,7 +21,7 @@ function Recipe(props) {
                    Category: {props.recipe.categoryIdList}
                </div>
                <div>
-                   Ingredients: <IngredientList/>
+                   Ingredients: <IngredientList ingredientIdList = {props.recipe.ingredientList}/>
                </div>
            </Card.Body>
        </Card>

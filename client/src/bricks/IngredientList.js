@@ -4,7 +4,7 @@ import Icon from "@mdi/react";
 import {mdiLoading} from "@mdi/js";
 import Ingredient from "./Ingredient"
 
-function IngredientList() {
+function IngredientList(props) {
     const [ingredientLoadCall, setIngredientLoadCall] = useState({
         state: "pending",
     });
@@ -31,8 +31,11 @@ function IngredientList() {
                     </div>
                 );
             case "success":
+                const filteredIngredientList = ingredientLoadCall.data.filter((item) => {
+                    return props.ingredientIdList.includes(item.id);
+                });
                 return <ul>
-                            <Ingredient ingredientList={ingredientLoadCall.data} />
+                            <Ingredient ingredientList={filteredIngredientList} />
                         </ul>
             case "error":
                 return (
