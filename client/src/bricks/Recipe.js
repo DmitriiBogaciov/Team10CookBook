@@ -2,6 +2,7 @@ import React from "react";
 import Card from 'react-bootstrap/Card';
 import Icon from '@mdi/react';
 import { mdiGlassTulip, mdiReceiptTextEditOutline } from '@mdi/js';
+import IngredientList from "./IngredientList";
 
 function Recipe(props) {
     return (
@@ -18,6 +19,9 @@ function Recipe(props) {
 
                <div>
                    Category: {props.recipe.categoryIdList}
+               </div>
+               <div>
+                   Ingredients: <IngredientList/>
                </div>
            </Card.Body>
        </Card>
