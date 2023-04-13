@@ -34,9 +34,6 @@ function IngredientList(props) {
                 const filteredIngredientList = ingredientLoadCall.data.filter((item) => {
                     return props.ingredientList.includes(item.id);
                 });
-                console.log(props.ingredientList)
-                console.log(ingredientLoadCall.data)
-                console.log(filteredIngredientList)
                 return <ul>
                             <Ingredient ingredientList={filteredIngredientList} />
                         </ul>
