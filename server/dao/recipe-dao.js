@@ -33,18 +33,18 @@ class RecipeDao{
         return this._listAll()
     }
 
-    _listAll(){
-        let recipeList;
+    _listAll() {
+        let ingredientList;
         try {
-            recipeList = JSON.parse(fs.readFileSync(this._getStorageLocation()));
+            ingredientList = JSON.parse(fs.readFileSync(this._getStorageLocation()).toString());
         } catch(e) {
             if (e.code === "ENOENT") {
-                recipeList = [];
+                ingredientList = [];
             } else {
                 throw new Error("Unable to read from storage. " + this._getStorageLocation())
             }
         }
-        return recipeList;
+        return ingredientList;
     }
     delete(recipeId) {
         let recipeList = this._listAll();
