@@ -51,7 +51,7 @@ class IngredientDao {
         let ingredientList = this._listAll();
         const index = ingredientList.findIndex(item => item.id === ingredient.id);
         if (index === -1) {
-            throw new Error(`Ingredient with ID ${ingredientId} does not exist`);
+            throw new Error(`Ingredient with ID ${ingredient.id} does not exist`);
         }
         ingredientList[index] = Object.assign({}, ingredientList[index], ingredient);
         try {
