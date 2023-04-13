@@ -1,6 +1,5 @@
 "use strict";
 const fs = require("fs");
-const path = require("path");
 const crypto = require("crypto");
 
 class IngredientDao {
@@ -32,7 +31,7 @@ class IngredientDao {
     _listAll() {
         let ingredientList;
         try {
-            ingredientList = JSON.parse(fs.readFileSync(this._getStorageLocation()));
+            ingredientList = JSON.parse(fs.readFileSync(this._getStorageLocation()).toString());
         } catch(e) {
             if (e.code === "ENOENT") {
                 ingredientList = [];
@@ -51,7 +50,7 @@ class IngredientDao {
         let ingredientList = this._listAll();
         const index = ingredientList.findIndex(item => item.id === ingredient.id);
         if (index === -1) {
-            throw new Error(`Ingredient with ID ${ingredientId} does not exist`);
+            throw new Error(`Ingredient with ID ${ingredient.id} does not exist`);
         }
         ingredientList[index] = Object.assign({}, ingredientList[index], ingredient);
         try {
