@@ -1,6 +1,3 @@
-import Icon from "@mdi/react";
-import { Modal } from 'react-bootstrap';
-import { mdiClipboardListOutline } from "@mdi/js";
 import {useEffect, useState} from 'react'
 
 function RecipeDetail(recipe) {
