@@ -31,9 +31,20 @@ function IngredientList(props) {
                     </div>
                 );
             case "success":
-                const filteredIngredientList = ingredientLoadCall.data.filter((item) => {
-                    return props.ingredientIdList.includes(item.id);
-                });
+                const filteredIngredientList = ingredientLoadCall.data
+                    .filter((item) => {
+                        return props.ingredientList.some((ingredient) => ingredient.id === item.id);
+                    })
+                    .map((item) => {
+                        const ingredientInfo = props.ingredientList.find(
+                            (ingredient) => ingredient.id === item.id
+                        );
+                        return {
+                            ...item,
+                            amount: ingredientInfo.amount,
+                            unit: ingredientInfo.unit,
+                        };
+                    });
                 return <ul>
                             <Ingredient ingredientList={filteredIngredientList} />
                         </ul>
