@@ -4,7 +4,7 @@ import Icon from "@mdi/react";
 import {mdiLoading} from "@mdi/js";
 import Ingredient from "./Ingredient"
 
-function IngredientList(props) {
+function RecipeIngredientList(props) {
     const [ingredientLoadCall, setIngredientLoadCall] = useState({
         state: "pending",
     });
@@ -64,4 +64,4 @@ function IngredientList(props) {
     return <div className="App">{getChild()}</div>;
 }
 
-export default IngredientList;
+export default RecipeIngredientList;

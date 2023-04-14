@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from "react";
 import RecipeGridList from "./RecipeGridList"
 import RecipeTableList from "./RecipeTableList"
+import CreateRecipeForm from "./CreateRecipeForm"
 
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
@@ -39,6 +40,7 @@ function RecipeList(props) {
                     <Navbar.Brand>Recipes list</Navbar.Brand>
                     <div>
                         <Form className="d-flex" onSubmit={handleSearch}>
+                            <CreateRecipeForm/>
                             <Form.Control
                                 id={"searchInput"}
                                 style={{ maxWidth: "150px" }}

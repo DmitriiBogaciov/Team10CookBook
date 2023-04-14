@@ -4,7 +4,7 @@ import Icon from '@mdi/react';
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { mdiGlassTulip, mdiReceiptTextEditOutline } from '@mdi/js';
-import IngredientList from "./IngredientList";
+import RecipeIngredientList from "./RecipeIngredientList";
 import RecipeDetail from "./RecipeDetail";
 
 function Recipe(props) {
@@ -19,8 +19,8 @@ function Recipe(props) {
                 <Card.Title>
                     <Icon path={mdiGlassTulip} size={1} color="red" />{" "}
                     {props.recipe.name}
-                    <Button variant="primary" onClick={handleShow} className="ml-2">
-                        Show Details
+                    <Button variant="white btn-sm" onClick={handleShow} className="ml-2">
+                        Details
                     </Button>
                 </Card.Title>
                 <Card.Body>
@@ -29,7 +29,7 @@ function Recipe(props) {
                     {props.recipe.description}
                 </div>
                 <div>
-                    Ingredients: <IngredientList ingredientList={props.recipe.ingredientList} />
+                    Ingredients: <RecipeIngredientList ingredientList={props.recipe.ingredientList} />
                 </div>
             </Card.Body>
             </Card>
