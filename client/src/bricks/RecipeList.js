@@ -37,7 +37,7 @@ function RecipeList(props) {
         <div>
             <Navbar bg="light">
                 <div className="container-fluid">
-                    <Navbar.Brand>Recipes list</Navbar.Brand>
+                    <Navbar.Brand>Smoothie Station</Navbar.Brand>
                     <div>
                         <Form className="d-flex" onSubmit={handleSearch}>
                             <CreateRecipeForm/>
