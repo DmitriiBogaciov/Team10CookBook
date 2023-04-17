@@ -3,7 +3,7 @@ import styles from "../css/recipeList.module.css";
 import Icon from "@mdi/react";
 import {mdiLoading} from "@mdi/js";
 
-function IngredientList() {
+function CategoryList() {
     const [categoryLoadCall, setCategoryLoadCall] = useState({
         state: "pending",
     });
@@ -53,4 +53,4 @@ function IngredientList() {
     return <>{getChild()}</>
 }
 
-export default IngredientList;
+export default CategoryList;

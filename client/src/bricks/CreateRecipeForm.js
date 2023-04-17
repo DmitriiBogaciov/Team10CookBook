@@ -7,6 +7,7 @@ import CategoryList from "./CategoryList";
 
 function CreateRecipeForm() {
     const [isModalShown, setShow] = useState(false);
+    const [categories, setCategories] = useState(['']);
     const [ingredients, setIngredients] = useState([
         { name: '', amount: '', unit: '' } // добавляем один ингредиент в массив по умолчанию
     ]);
@@ -36,6 +37,22 @@ function CreateRecipeForm() {
         setIngredients(newIngredients);
     }
 
+    const handleCategoryChange = (index, value) => {
+        const newCategories = [...categories];
+        newCategories[index] = value;
+        setCategories(newCategories);
+    };
+
+    const handleAddCategory = () => {
+        setCategories([...categories, '']);
+    };
+
+    const handleRemoveCategory = (index) => {
+        const newCategories = [...categories];
+        newCategories.splice(index, 1);
+        setCategories(newCategories);
+    };
+
     return (
         <>
             <Modal show={isModalShown} onHide={handleCloseModal}>
@@ -56,45 +73,74 @@ function CreateRecipeForm() {
                             <Form.Label>Image</Form.Label>
                             <Form.Control type="file" size="sm"/>
                         </Form.Group>
-                        {ingredients.map((ingredient: Ingredient, index) => (
-                            <Form.Group key={index} className="mb-3">
-                                <Form.Label>Ingredient {index + 1}</Form.Label>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Ingredients:</Form.Label>{" "}
+                            {ingredients.map((ingredient: Ingredient, index) => (
+                                <Form.Group key={index} className="mb-3">
+                                    <div className="d-flex">
+                                        <Form.Select
+                                            value={ingredient.name}
+                                            size="sm"
+                                            style={{marginRight: '8px' }}
+                                            onChange={(e) => handleIngredientChange(index, 'name', e.target.value)}
+                                        >
+                                            <IngredientList/>
+                                        </Form.Select>
+                                        <Form.Control
+                                            value={ingredient.amount}
+                                            size="sm"
+                                            type="number"
+                                            placeholder="Amount"
+                                            style={{ maxWidth: '100px', marginRight: '8px' }}
+                                            onChange={(e) => handleIngredientChange(index, 'amount', e.target.value)}
+                                        />
+                                        <Form.Control
+                                            value={ingredient.unit}
+                                            size="sm"
+                                            type="text"
+                                            placeholder="Unit"
+                                            style={{ maxWidth: '100px' }}
+                                            onChange={(e) => handleIngredientChange(index, 'unit', e.target.value)}
+                                        />
+                                        <Button variant="danger" size="sm" onClick={() => handleRemoveIngredient(index)}>X</Button>
+                                    </div>
+                                </Form.Group>
+                            ))}
+                            <Button variant="secondary" size="sm" onClick={handleAddIngredient}>Add Ingredient</Button>
+                        </Form.Group>
+
+                        <Form.Group className="mb-3">
+                            <Form.Label>Categories: </Form.Label>{" "}
+                            <Form.Group key={0} className="mb-3">
                                 <div className="d-flex">
                                     <Form.Select
-                                        value={ingredient.name}
+                                        value={categories[0].name}
                                         size="sm"
-                                        style={{marginRight: '8px' }}
-                                        onChange={(e) => handleIngredientChange(index, 'name', e.target.value)}
+                                        style={{ maxWidth: '250px' }}
+                                        onChange={(e) => handleCategoryChange(0, e.target.value)}
                                     >
-                                        <IngredientList/>
+                                        <CategoryList/>
                                     </Form.Select>
-                                    <Form.Control
-                                        value={ingredient.amount}
-                                        size="sm"
-                                        type="number"
-                                        placeholder="Amount"
-                                        style={{ maxWidth: '100px', marginRight: '8px' }}
-                                        onChange={(e) => handleIngredientChange(index, 'amount', e.target.value)}
-                                    />
-                                    <Form.Control
-                                        value={ingredient.unit}
-                                        size="sm"
-                                        type="text"
-                                        placeholder="Unit"
-                                        style={{ maxWidth: '100px' }}
-                                        onChange={(e) => handleIngredientChange(index, 'unit', e.target.value)}
-                                    />
-                                    <Button variant="danger" size="sm" onClick={() => handleRemoveIngredient(index)}>X</Button>
                                 </div>
                             </Form.Group>
-                        ))}
-                        <Button variant="secondary" size="sm" onClick={handleAddIngredient}>Add Ingredient</Button>
-                        <Form.Group className="mb-3">
-                            <Form.Label>Category</Form.Label>
-                            <Form.Select size="sm">
-                                <CategoryList/>
-                            </Form.Select>
+                            {categories.slice(1).map((category, index) => (
+                                <Form.Group key={index + 1} className="mb-3">
+                                    <div className="d-flex">
+                                        <Form.Select
+                                            value={category.name}
+                                            size="sm"
+                                            style={{ maxWidth: '250px' }}
+                                            onChange={(e) => handleCategoryChange(index + 1, e.target.value)}
+                                        >
+                                            <CategoryList/>
+                                        </Form.Select>
+                                        <Button variant="danger" size="sm" style={{ marginLeft: '8px' }} onClick={() => handleRemoveCategory(index + 1)}>Remove</Button>
+                                    </div>
+                                </Form.Group>
+                            ))}
+                            <Button variant="secondary" size="sm" onClick={handleAddCategory}>Add Category</Button>
                         </Form.Group>
+
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
