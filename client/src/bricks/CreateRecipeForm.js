@@ -132,6 +132,7 @@ function CreateRecipeForm() {
                                             style={{ maxWidth: '250px' }}
                                             onChange={(e) => handleCategoryChange(index + 1, e.target.value)}
                                         >
+                                            <option>Choose..</option>
                                             <CategoryList/>
                                         </Form.Select>
                                         <Button variant="danger" size="sm" style={{ marginLeft: '8px' }} onClick={() => handleRemoveCategory(index + 1)}>Remove</Button>
