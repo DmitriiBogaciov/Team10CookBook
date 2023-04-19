@@ -1,33 +1,72 @@
 import Icon from "@mdi/react";
 import {Form, Modal, Button} from 'react-bootstrap';
 import { mdiPlus } from "@mdi/js";
-import React, { useState } from 'react'
-import IngredientList from "./IngredientList";
-import CategoryList from "./CategoryList";
+import React, { useState, useEffect, useMemo } from 'react'
+
 
 function CreateRecipeForm() {
     const [isModalShown, setShow] = useState(false);
-    const [categories, setCategories] = useState(['']);
+    const [categories, setCategories] = useState([]);
     const [ingredients, setIngredients] = useState([
-        { name: '', amount: '', unit: '' } // добавляем один ингредиент в массив по умолчанию
+        { id: '', amount: '', unit: '' }
     ]);
+    const [ingredientList, setIngredientList] = useState([]);
+    const [categoryList, setCategoryList] = useState([]);
+    const [recipeName, setRecipeName] = useState('');
+    const [description, setDescription] = useState('');
+    const [image, setImage] = useState(null);
 
     const handleShowModal = () => setShow(true);
     const handleCloseModal = () => setShow(false);
 
+    useEffect(() => {
+        fetch("/ingredient/list")
+            .then((response) => response.json())
+            .then((ingredients) => setIngredientList(ingredients))
+            .catch((error) => console.error(error));
+    }, []);
+
+    useEffect(() => {
+        fetch("/category/list")
+            .then((response) => response.json())
+            .then((categories) => setCategoryList(categories))
+            .catch((error) => console.error(error));
+    }, []);
+
+    const ingredientOptions = useMemo(() => {
+        return ingredientList.map((ingredient) => ingredient);
+    }, [ingredientList]);
+
+    const categoryOptions = useMemo(() => {
+        return categoryList.map((category) => category);
+    }, [categoryList]);
+
     interface Ingredient {
-        name: string;
+        id: string;
         amount: number;
         unit: string;
     }
 
+    const handleRecipeNameChange = (e) => {
+        setRecipeName(e.target.value);
+    };
+
+    const handleDescriptionChange = (e) => {
+        setDescription(e.target.value);
+    };
+
+    const handleImageChange = (e) => {
+        setImage(e.target.files[0]);
+    };
+
     const handleAddIngredient = () => {
-        setIngredients([...ingredients, { name: '', amount: '', unit: '' }]);
+        setIngredients([...ingredients, { id: '', amount: '', unit: '' }]);
     }
 
-    const handleIngredientChange = (index, key, value) => {
+    const handleIngredientChange = (index, e) => {
+        const { name, value } = e.target;
         const newIngredients = [...ingredients];
-        newIngredients[index][key] = value;
+        newIngredients[index][name] = name === 'amount' ? Number(value) : value;
         setIngredients(newIngredients);
     }
 
@@ -44,7 +83,7 @@ function CreateRecipeForm() {
     };
 
     const handleAddCategory = () => {
-        setCategories([...categories, '']);
+        setCategories([...categories, { id: '' }]);
     };
 
     const handleRemoveCategory = (index) => {
@@ -53,25 +92,79 @@ function CreateRecipeForm() {
         setCategories(newCategories);
     };
 
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log("ok");
+
+        const formData = new FormData();
+        formData.append('name', recipeName);
+        formData.append('description', description);
+        formData.append('imageId', image.name);
+        formData.append("ingredientList", JSON.stringify(ingredients));
+        formData.append("categoryIdList", JSON.stringify(categories));
+
+        const formJSON = {};
+
+        for (let [key, value] of formData.entries()) {
+            try {
+                value = JSON.parse(value);
+            } catch (e) {
+                // value is not JSON
+            }
+            formJSON[key] = value;
+        }
+
+        console.log(formJSON);
+
+        fetch('/recipe/create', {
+            method: 'POST',
+            body: formJSON,
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    };
+
     return (
         <>
             <Modal show={isModalShown} onHide={handleCloseModal}>
+                <Form onSubmit={handleSubmit}
+                      style={{ maxWidth: "600px" }}
+                      className="mx-auto">
                 <Modal.Header closeButton>
                     <Modal.Title>Create recipe</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form>
                         <Form.Group className="mb-3">
                             <Form.Label>Recipe name</Form.Label>
-                            <Form.Control type="text" style={{maxWidth: '70%'}}/>
+                            <Form.Control
+                                type="text"
+                                style={{ maxWidth: '70%' }}
+                                value={recipeName}
+                                onChange={handleRecipeNameChange}
+                            />
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Description</Form.Label>
-                            <Form.Control as="textarea" rows={3} />
+                            <Form.Control
+                                as="textarea"
+                                rows={3}
+                                value={description}
+                                onChange={handleDescriptionChange}
+                            />
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Image</Form.Label>
-                            <Form.Control type="file" size="sm"/>
+                            <Form.Control
+                                type="file"
+                                size="sm"
+                                onChange={handleImageChange}
+                            />
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Ingredients:</Form.Label>{" "}
@@ -79,30 +172,44 @@ function CreateRecipeForm() {
                                 <Form.Group key={index} className="mb-3">
                                     <div className="d-flex">
                                         <Form.Select
-                                            value={ingredient.name}
+                                            name="id"
+                                            value={ingredient.id}
                                             size="sm"
-                                            style={{marginRight: '8px' }}
-                                            onChange={(e) => handleIngredientChange(index, 'name', e.target.value)}
+                                            style={{ marginRight: '8px' }}
+                                            onChange={(e) => handleIngredientChange(index, e)}
                                         >
-                                            <IngredientList/>
+                                            <option>Choose..</option>
+                                            {ingredientOptions.map((ingredient) => (
+                                                <option key={ingredient.id} value={ingredient.id}>
+                                                    {ingredient.name}
+                                                </option>
+                                            ))}
                                         </Form.Select>
                                         <Form.Control
-                                            value={ingredient.amount}
+                                            name="amount"
+                                            value={Number(ingredient.amount)}
                                             size="sm"
                                             type="number"
                                             placeholder="Amount"
                                             style={{ maxWidth: '100px', marginRight: '8px' }}
-                                            onChange={(e) => handleIngredientChange(index, 'amount', e.target.value)}
+                                            onChange={(e) => handleIngredientChange(index, e)}
                                         />
                                         <Form.Control
+                                            name="unit"
                                             value={ingredient.unit}
                                             size="sm"
                                             type="text"
                                             placeholder="Unit"
                                             style={{ maxWidth: '100px' }}
-                                            onChange={(e) => handleIngredientChange(index, 'unit', e.target.value)}
+                                            onChange={(e) => handleIngredientChange(index, e)}
                                         />
-                                        <Button variant="danger" size="sm" onClick={() => handleRemoveIngredient(index)}>X</Button>
+                                        <Button
+                                            variant="danger"
+                                            size="sm"
+                                            onClick={() => handleRemoveIngredient(index)}
+                                        >
+                                            X
+                                        </Button>
                                     </div>
                                 </Form.Group>
                             ))}
@@ -111,42 +218,40 @@ function CreateRecipeForm() {
 
                         <Form.Group className="mb-3">
                             <Form.Label>Categories: </Form.Label>{" "}
-                            <Form.Group key={0} className="mb-3">
-                                <div className="d-flex">
-                                    <Form.Select
-                                        value={categories[0].name}
-                                        size="sm"
-                                        style={{ maxWidth: '250px' }}
-                                        onChange={(e) => handleCategoryChange(0, e.target.value)}
-                                    >
-                                        <CategoryList/>
-                                    </Form.Select>
-                                </div>
-                            </Form.Group>
-                            {categories.slice(1).map((category, index) => (
-                                <Form.Group key={index + 1} className="mb-3">
+                            {categories.map((category, index) => (
+                                <Form.Group key={index} className="mb-3">
                                     <div className="d-flex">
                                         <Form.Select
-                                            value={category.name}
+                                            value={category.id}
                                             size="sm"
                                             style={{ maxWidth: '250px' }}
-                                            onChange={(e) => handleCategoryChange(index + 1, e.target.value)}
+                                            onChange={(e) => handleCategoryChange(index, e.target.value)}
                                         >
                                             <option>Choose..</option>
-                                            <CategoryList/>
+                                            {categoryOptions.map((category) => (
+                                                <option key={category.id} value={category.id}>
+                                                    {category.name}
+                                                </option>
+                                            ))}
                                         </Form.Select>
-                                        <Button variant="danger" size="sm" style={{ marginLeft: '8px' }} onClick={() => handleRemoveCategory(index + 1)}>Remove</Button>
+                                        <Button
+                                            variant="danger"
+                                            size="sm"
+                                            style={{ marginLeft: '8px' }}
+                                            onClick={() => handleRemoveCategory(index)}
+                                        >
+                                            Remove
+                                        </Button>
                                     </div>
                                 </Form.Group>
                             ))}
                             <Button variant="secondary" size="sm" onClick={handleAddCategory}>Add Category</Button>
                         </Form.Group>
-
-                    </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="primary" onClick={handleCloseModal}>Create Recipe</Button>
+                    <Button variant="primary" type="submit">Create Recipe</Button>
                 </Modal.Footer>
+                </Form>
             </Modal>
             <Icon
                 path={mdiPlus}

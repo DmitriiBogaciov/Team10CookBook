@@ -7,7 +7,7 @@ const { createRecipeImageSchema } = require("../../shemas/recipe-image-schemas")
 
 async function CreateAbl(busboy, res) {
     let dtoIn = {};
-    busboy.on("field", function(fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) {
+    busboy.on("field", function(fieldname, val) {
         dtoIn[fieldname] = val;
     });
 

@@ -16,19 +16,17 @@ const schema = {
         imageId: {type: "string"},
         ingredientList: {
             type: "array",
-            minItems: 0,
-            items: [
-                {
-                    type: "object",
-                    properties: {
-                        id: { type: "string" },
-                        amount: { type: "number" },
-                        unit: { type: "string" },
-                    },
-                    required: ["id", "amount", "unit"],
-                }
-            ]
-        }
+            minItems: 1,
+            items: {
+                type: "object",
+                properties: {
+                    id: { type: "string" },
+                    amount: { type: "number" },
+                    unit: { type: "string" },
+                },
+                required: ["id", "amount", "unit"],
+            },
+        },
     },
     required: ["name", "description", "categoryIdList", "imageId", "ingredientList"],
     additionalProperties: false,

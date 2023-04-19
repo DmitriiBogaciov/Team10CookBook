@@ -39,8 +39,8 @@ function RecipeList(props) {
                 <div className="container-fluid">
                     <Navbar.Brand>Smoothie Station</Navbar.Brand>
                     <div>
-                        <Form className="d-flex" onSubmit={handleSearch}>
-                            <CreateRecipeForm/>
+                        <Form className="d-flex" onSubmit={(event) => handleSearch(event)}>
+                        <CreateRecipeForm/>
                             <Form.Control
                                 id={"searchInput"}
                                 style={{ maxWidth: "150px" }}
