@@ -26,7 +26,8 @@ function RecipeList(props) {
 
     function handleSearch(event) {
         event.preventDefault();
-        setSearchBy(event.target["searchInput"].value);
+        const searchInput = document.getElementById("searchInput");
+        setSearchBy(searchInput.value);
     }
 
     function handleSearchDelete(event) {
@@ -39,7 +40,7 @@ function RecipeList(props) {
                 <div className="container-fluid">
                     <Navbar.Brand>Smoothie Station</Navbar.Brand>
                     <div>
-                        <Form className="d-flex" onSubmit={(event) => handleSearch(event)}>
+                        <Form className="d-flex" onSubmit={handleSearch}>
                         <CreateRecipeForm/>
                             <Form.Control
                                 id={"searchInput"}

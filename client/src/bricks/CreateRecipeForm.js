@@ -95,7 +95,6 @@ function CreateRecipeForm() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("ok");
 
         const formData = new FormData();
         formData.append('name', recipeName);
@@ -104,24 +103,18 @@ function CreateRecipeForm() {
         formData.append("ingredientList", JSON.stringify(ingredients));
         formData.append("categoryIdList", JSON.stringify(categories));
 
-        const formJSON = {};
-
-        for (let [key, value] of formData.entries()) {
-            try {
-                value = JSON.parse(value);
-            } catch (e) {
-                // value is not JSON
-            }
-            formJSON[key] = value;
-        }
-
-        console.log(formJSON);
+        console.log(formData)
 
         fetch('/recipe/create', {
             method: 'POST',
-            body: formJSON,
+            body: formData,
         })
-            .then((response) => response.json())
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then((data) => {
                 console.log(data);
             })

@@ -2,7 +2,7 @@ import React from "react";
 
 function Ingredient(props) {
     return props.ingredientList.map((ingredient) => {
-        return <li>{ingredient.name}</li>
+        return <li key={ingredient.id}>{ingredient.name}</li>
     })
 }
 
