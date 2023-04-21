@@ -33,6 +33,7 @@ const schema = {
 }
 
 function CreateAbl(req, res) {
+    console.log(req.body)
     try {
         const valid = ajv.validate(schema, req.body);
         if (valid) {

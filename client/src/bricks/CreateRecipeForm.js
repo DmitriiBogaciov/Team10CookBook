@@ -96,18 +96,21 @@ function CreateRecipeForm() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const formData = new FormData();
-        formData.append('name', recipeName);
-        formData.append('description', description);
-        formData.append('imageId', image.name);
-        formData.append("ingredientList", JSON.stringify(ingredients));
-        formData.append("categoryIdList", JSON.stringify(categories));
-
-        console.log(formData)
+        // Создание объекта с данными формы
+        const data = {
+            name: recipeName,
+            description: description,
+            imageId: image.name,
+            ingredientList: ingredients,
+            categoryIdList: categories
+        };
 
         fetch('/recipe/create', {
             method: 'POST',
-            body: formData,
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data) // Преобразование объекта в JSON-строку
         })
             .then((response) => {
                 if (!response.ok) {
