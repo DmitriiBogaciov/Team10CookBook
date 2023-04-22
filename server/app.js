@@ -3,13 +3,15 @@ const categoryRouter = require("./controller/category-controller");
 const recipeRouter = require("./controller/recipe-controller");
 const ingredientRouter = require("./controller/ingredient-controller");
 const recipeImageRouter = require("./controller/recipe-image-controller")
-const ratingRouter = require("./controller/rating-controller")
+const ratingRouter = require("./controller/rating-controller");
+const path = require('path');
 
 const app = express();
 const port = 8000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use('/storage/recipe-image', express.static(path.join(__dirname, 'storage/recipe-image')));
 
 app.get("/", (req, res)=> {
     res.send("Hello World");

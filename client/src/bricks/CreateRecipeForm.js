@@ -93,37 +93,48 @@ function CreateRecipeForm() {
     };
 
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Создание объекта с данными формы
+        //upload image
+        const formData = new FormData();
+        formData.append('image', image);
+
+        const response = await fetch('/recipeImage/create', {
+            method: 'POST',
+            body: formData,
+        })
+
+        const imageResponse = await response.json();
+        if (!response.ok) {
+            throw new Error('Failed to upload image');
+        }
+
+        const imgId = imageResponse.imgId;
+
         const data = {
             name: recipeName,
             description: description,
-            imageId: image.name,
+            imageId: imgId,
             ingredientList: ingredients,
-            categoryIdList: categories
+            categoryIdList: categories,
         };
 
-        fetch('/recipe/create', {
+        const recipeResponse = await fetch('/recipe/create', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(data) // Преобразование объекта в JSON-строку
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then((data) => {
-                console.log(data);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+            body: JSON.stringify(data),
+        });
+
+        if (!recipeResponse.ok) {
+            throw new Error('Failed to create recipe');
+        }
+
+        const recipeData = await recipeResponse.json();
+        console.log(recipeData);
+
     };
 
     return (
