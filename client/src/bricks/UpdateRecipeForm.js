@@ -1,24 +1,17 @@
-import Icon from "@mdi/react";
 import {Form, Modal, Button} from 'react-bootstrap';
-import { mdiPlus } from "@mdi/js";
 import React, { useState, useEffect, useMemo } from 'react'
 
 
-function CreateRecipeForm() {
-    const [isModalShown, setShow] = useState(false);
-    const [categories, setCategories] = useState(['']);
-    const [ingredients, setIngredients] = useState([
-        { id: '', amount: '', unit: '' }
-    ]);
+function UpdateRecipeForm({show, onHide, recipe}) {
     const [ingredientList, setIngredientList] = useState([]);
     const [categoryList, setCategoryList] = useState([]);
-    const [recipeName, setRecipeName] = useState('');
-    const [description, setDescription] = useState('');
-    const [method, setMethod] = useState('');
-    const [image, setImage] = useState(null);
 
-    const handleShowModal = () => setShow(true);
-    const handleCloseModal = () => setShow(false);
+    const [recipeName, setRecipeName] = useState(recipe.name);
+    const [description, setDescription] = useState(recipe.description);
+    const [method, setMethod] = useState(recipe.method);
+    const [image, setImage] = useState(null);
+    const [categories, setCategories] = useState(recipe.categoryIdList);
+    const [ingredients, setIngredients] = useState(recipe.ingredientList);
 
     useEffect(() => {
         fetch("/ingredient/list")
@@ -118,6 +111,7 @@ function CreateRecipeForm() {
         const imgId = imageResponse.imgId;
 
         const data = {
+            id: recipe.id,
             name: recipeName,
             description: description,
             imageId: imgId,
@@ -126,8 +120,8 @@ function CreateRecipeForm() {
             method: method,
         };
 
-        const recipeResponse = await fetch('/recipe/create', {
-            method: 'POST',
+        const recipeResponse = await fetch('/recipe/update', {
+            method: 'PUT',
             headers: {
                 "Content-Type": "application/json",
             },
@@ -135,9 +129,7 @@ function CreateRecipeForm() {
         });
 
         if (!recipeResponse.ok) {
-            throw new Error('Failed to create recipe');
-        } else {
-            handleCloseModal();
+            throw new Error('Failed to update recipe');
         }
 
         const recipeData = await recipeResponse.json();
@@ -147,14 +139,14 @@ function CreateRecipeForm() {
 
     return (
         <>
-            <Modal show={isModalShown} onHide={handleCloseModal}>
+            <Modal show={show} onHide={onHide}>
                 <Form onSubmit={handleSubmit}
                       style={{ maxWidth: "600px" }}
                       className="mx-auto">
-                <Modal.Header closeButton>
-                    <Modal.Title>Create recipe</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Create recipe</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
                         <Form.Group className="mb-3">
                             <Form.Label>Recipe name</Form.Label>
                             <Form.Control
@@ -271,20 +263,14 @@ function CreateRecipeForm() {
                             ))}
                             <Button variant="secondary" size="sm" onClick={handleAddCategory}>Add Category</Button>
                         </Form.Group>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="primary" type="submit">Create Recipe</Button>
-                </Modal.Footer>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="primary" type="submit">Update Recipe</Button>
+                    </Modal.Footer>
                 </Form>
             </Modal>
-            <Icon
-                path={mdiPlus}
-                style={{ color: "black", cursor: "pointer", alignSelf: 'center', marginRight: '8px'}}
-                size={1.3}
-                onClick={handleShowModal}
-            />
         </>
     )
 }
 
-export default CreateRecipeForm;
+export default UpdateRecipeForm;

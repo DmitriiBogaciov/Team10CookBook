@@ -13,6 +13,7 @@ const schema = {
         id: {type: "string"},
         name: { type: "string"},
         description: { type: "string"},
+        method: { type: "string", minLength: 1, maxLength: 4000},
         categoryIdList: { type: "array", items: { type: "string" } },
         imageId: {type: "string"},
         ingredientList: {

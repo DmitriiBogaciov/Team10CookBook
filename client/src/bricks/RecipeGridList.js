@@ -49,7 +49,7 @@ function RecipeGridList(props) {
                             onHide={handleClose}
                         >
                             <Modal.Header closeButton>
-                                <Modal.Title>{recipe.name}</Modal.Title>
+                                {/*<Modal.Title>{recipe.name}</Modal.Title>*/}
                             </Modal.Header>
                             <Modal.Body>
                                 <RecipeDetail recipe={recipe} />

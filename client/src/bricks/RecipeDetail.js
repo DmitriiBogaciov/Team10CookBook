@@ -1,11 +1,13 @@
-import {Card} from "react-bootstrap";
+import {Card, Button} from "react-bootstrap";
 import React, { useState, useEffect } from "react";
-
-
-
-
+import UpdateRecipeForm from "./UpdateRecipeForm";
 
 function RecipeDetail(props) {
+    const [isEditModalShown, setEditModalShow] = useState(false);
+
+    const handleShowEditModal = () => setEditModalShow(true);
+    const handleCloseEditModal = () => setEditModalShow(false);
+
     const [categories, setCategories] = useState([]);
     const [ingredients, setIngredients] = useState([]);
 
@@ -63,9 +65,22 @@ function RecipeDetail(props) {
                             <strong>Method of Preparation:</strong>
                             <p>{props.recipe.method}</p>
                         </Card.Text>
+                        <Button
+                            variant="primary"
+                            size="sm"
+                            onClick={handleShowEditModal}
+                            style={{ marginLeft: "10px" }}
+                        >
+                            Edit Recipe
+                        </Button>
                     </Card.Body>
                 </Card>
             </div>
+            <UpdateRecipeForm
+                show={isEditModalShown}
+                onHide={handleCloseEditModal}
+                recipe={props.recipe}
+            />
         </div>
     );
 
