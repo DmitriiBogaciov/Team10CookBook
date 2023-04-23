@@ -10,8 +10,9 @@ const ajv = new Ajv();
 const schema = {
     type: "object",
     properties: {
-        name: { type: "string", minLength: 1},
-        description: { type: "string", minLength: 1},
+        name: { type: "string", minLength: 1, maxLength: 40},
+        description: { type: "string", minLength: 1, maxLength: 500},
+        method: { type: "string", minLength: 1, maxLength: 4000},
         categoryIdList: { type: "array", items: { type: "string", minLength: 1 }, minItems: 1 },
         imageId: {type: "string", minLength: 1},
         ingredientList: {
@@ -28,7 +29,7 @@ const schema = {
             },
         },
     },
-    required: ["name", "description", "categoryIdList", "imageId", "ingredientList"],
+    required: ["name", "description", "categoryIdList", "imageId", "ingredientList", "method"],
     additionalProperties: false,
 }
 

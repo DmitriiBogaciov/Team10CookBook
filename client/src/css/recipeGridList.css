@@ -19,3 +19,15 @@
     flex-direction: column;
     justify-content: space-between;
 }
+
+.description-truncate {
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Ограничиваем количество строк до 3 */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.description-container {
+    min-height: 4em; /* Устанавливаем минимальную высоту в 4em */
+}

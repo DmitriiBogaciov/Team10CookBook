@@ -14,6 +14,7 @@ function CreateRecipeForm() {
     const [categoryList, setCategoryList] = useState([]);
     const [recipeName, setRecipeName] = useState('');
     const [description, setDescription] = useState('');
+    const [method, setMethod] = useState('');
     const [image, setImage] = useState(null);
 
     const handleShowModal = () => setShow(true);
@@ -54,6 +55,10 @@ function CreateRecipeForm() {
     const handleDescriptionChange = (e) => {
         setDescription(e.target.value);
     };
+
+    const handleMethodChange = (e) => {
+        setMethod(e.target.value)
+    }
 
     const handleImageChange = (e) => {
         setImage(e.target.files[0]);
@@ -118,6 +123,7 @@ function CreateRecipeForm() {
             imageId: imgId,
             ingredientList: ingredients,
             categoryIdList: categories,
+            method: method,
         };
 
         const recipeResponse = await fetch('/recipe/create', {
@@ -130,6 +136,8 @@ function CreateRecipeForm() {
 
         if (!recipeResponse.ok) {
             throw new Error('Failed to create recipe');
+        } else {
+            handleCloseModal();
         }
 
         const recipeData = await recipeResponse.json();
@@ -160,9 +168,18 @@ function CreateRecipeForm() {
                             <Form.Label>Description</Form.Label>
                             <Form.Control
                                 as="textarea"
-                                rows={3}
+                                rows={2}
                                 value={description}
                                 onChange={handleDescriptionChange}
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Method of Preparation</Form.Label>
+                            <Form.Control
+                                as="textarea"
+                                rows={3}
+                                value={method}
+                                onChange={handleMethodChange}
                             />
                         </Form.Group>
                         <Form.Group className="mb-3">

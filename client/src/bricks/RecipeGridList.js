@@ -37,8 +37,11 @@ function RecipeGridList(props) {
                                 {recipe.name}
                             </Card.Title>
                             <Card.Body>
-                                <div>{recipe.description}</div>
+                                <div className="description-truncate description-container">
+                                    {recipe.description}
+                                </div>
                             </Card.Body>
+
                         </Card>
 
                         <Modal
