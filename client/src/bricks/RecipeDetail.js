@@ -80,6 +80,7 @@ function RecipeDetail(props) {
                 show={isEditModalShown}
                 onHide={handleCloseEditModal}
                 recipe={props.recipe}
+                onSuccess={handleCloseEditModal}
             />
         </div>
     );

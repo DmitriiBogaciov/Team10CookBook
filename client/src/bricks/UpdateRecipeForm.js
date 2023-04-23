@@ -2,7 +2,7 @@ import {Form, Modal, Button} from 'react-bootstrap';
 import React, { useState, useEffect, useMemo } from 'react'
 
 
-function UpdateRecipeForm({show, onHide, recipe}) {
+function UpdateRecipeForm({show, onHide, recipe, onSuccess}) {
     const [ingredientList, setIngredientList] = useState([]);
     const [categoryList, setCategoryList] = useState([]);
 
@@ -130,6 +130,8 @@ function UpdateRecipeForm({show, onHide, recipe}) {
 
         if (!recipeResponse.ok) {
             throw new Error('Failed to update recipe');
+        } else {
+            onSuccess();
         }
 
         const recipeData = await recipeResponse.json();
