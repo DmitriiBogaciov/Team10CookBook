@@ -6,19 +6,21 @@ function RecipeDetail(props) {
     const [isEditModalShown, setEditModalShow] = useState(false);
 
     const handleShowEditModal = () => setEditModalShow(true);
-    const handleCloseEditModal = () => setEditModalShow(false);
+    const handleCloseEditModal = () => {
+        setEditModalShow(false);
+    };
 
     const [categories, setCategories] = useState([]);
     const [ingredients, setIngredients] = useState([]);
 
     const fetchCategories = async () => {
-        const response = await fetch("/category/list"); // Замените на ваш URL для получения категорий
+        const response = await fetch("/category/list");
         const data = await response.json();
         setCategories(data);
     };
 
     const fetchIngredients = async () => {
-        const response = await fetch("/ingredient/list"); // Замените на ваш URL для получения ингредиентов
+        const response = await fetch("/ingredient/list");
         const data = await response.json();
         setIngredients(data);
     };
@@ -81,6 +83,7 @@ function RecipeDetail(props) {
                 onHide={handleCloseEditModal}
                 recipe={props.recipe}
                 onSuccess={handleCloseEditModal}
+                categories={categories}
             />
         </div>
     );

@@ -10,8 +10,9 @@ function UpdateRecipeForm({show, onHide, recipe, onSuccess}) {
     const [description, setDescription] = useState(recipe.description);
     const [method, setMethod] = useState(recipe.method);
     const [image, setImage] = useState(null);
-    const [categories, setCategories] = useState(recipe.categoryIdList);
+    const [categories, setCategories] = useState(recipe.categoryIdList.map(categoryId => ({ id: categoryId })));
     const [ingredients, setIngredients] = useState(recipe.ingredientList);
+    console.log(categories)
 
     useEffect(() => {
         fetch("/ingredient/list")
@@ -75,8 +76,8 @@ function UpdateRecipeForm({show, onHide, recipe, onSuccess}) {
     }
 
     const handleCategoryChange = (index, value) => {
-        const newCategories = [...categories];
-        newCategories[index] = value;
+        const newCategories = JSON.parse(JSON.stringify(categories));
+        newCategories[index] = { id: value };
         setCategories(newCategories);
     };
 
