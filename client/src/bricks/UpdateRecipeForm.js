@@ -12,7 +12,6 @@ function UpdateRecipeForm({show, onHide, recipe, onSuccess}) {
     const [image, setImage] = useState(null);
     const [categories, setCategories] = useState(recipe.categoryIdList.map(categoryId => ({ id: categoryId })));
     const [ingredients, setIngredients] = useState(recipe.ingredientList);
-    console.log(categories)
 
     useEffect(() => {
         fetch("/ingredient/list")

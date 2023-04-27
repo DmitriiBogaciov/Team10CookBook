@@ -1,14 +1,18 @@
 import {Card, Button} from "react-bootstrap";
 import React, { useState, useEffect } from "react";
+import Modal from "react-bootstrap/Modal";
 import UpdateRecipeForm from "./UpdateRecipeForm";
 
 function RecipeDetail(props) {
     const [isEditModalShown, setEditModalShow] = useState(false);
+    const [isDeleteModalShown, setDeleteModalShow] = useState(false);
 
     const handleShowEditModal = () => setEditModalShow(true);
     const handleCloseEditModal = () => {
         setEditModalShow(false);
     };
+    const handleShowDeleteModal = () => setDeleteModalShow(true);
+    const handleCloseDeleteModal = () => setDeleteModalShow(false);
 
     const [categories, setCategories] = useState([]);
     const [ingredients, setIngredients] = useState([]);
@@ -24,6 +28,33 @@ function RecipeDetail(props) {
         const data = await response.json();
         setIngredients(data);
     };
+
+    const data = {
+        id: props.recipe.id
+    };
+    console.log(data)
+
+    const handleDeleteRecipe = async () => {
+        try {
+            const response = await fetch(`/recipe/delete`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to delete recipe");
+            }
+        } catch (error) {
+            console.error(error);
+        } finally {
+            props.onSuccess();
+            handleCloseDeleteModal();
+        }
+    };
+
     useEffect(() => {
         const fetchData = async () => {
             await fetchCategories();
@@ -67,17 +98,37 @@ function RecipeDetail(props) {
                             <strong>Method of Preparation:</strong>
                             <p>{props.recipe.method}</p>
                         </Card.Text>
-                        <Button
-                            variant="primary"
-                            size="sm"
-                            onClick={handleShowEditModal}
-                            style={{ marginLeft: "10px" }}
-                        >
-                            Edit Recipe
-                        </Button>
+                        <div className="row">
+                            <div className="col-12">
+                                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                    <Button variant="danger" size="sm" onClick={handleShowDeleteModal}>
+                                        Delete Recipe
+                                    </Button>
+                                    <Button variant="primary" size="sm" onClick={handleShowEditModal}>
+                                        Edit Recipe
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
                     </Card.Body>
                 </Card>
             </div>
+            <Modal show={isDeleteModalShown} onHide={handleCloseDeleteModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Confirm Delete</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Are you sure you want to delete this recipe?
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseDeleteModal}>
+                        No
+                    </Button>
+                    <Button variant="danger" onClick={handleDeleteRecipe}>
+                        Yes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
             <UpdateRecipeForm
                 show={isEditModalShown}
                 onHide={handleCloseEditModal}
