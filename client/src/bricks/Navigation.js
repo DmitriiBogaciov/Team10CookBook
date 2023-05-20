@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown, Form, Button } from 'react-bootstrap';
+import Icon from "@mdi/react";
+import { mdiMagnify } from "@mdi/js";
 
 function Navigation() {
     const [categories, setCategories] = useState([]);
+    const [searchValue, setSearchValue] = useState("");
 
     useEffect(() => {
         // Выполните запрос к серверу для получения списка категорий
@@ -12,6 +15,13 @@ function Navigation() {
             .then(data => setCategories(data))
             .catch(error => console.error(error));
     }, []);
+
+    function handleSearchSubmit(event) {
+        event.preventDefault();
+        // Обработка поиска
+        console.log('Search:', searchValue);
+        setSearchValue("");
+    }
 
     return (
         <Navbar bg="dark" variant="dark" expand="md">
@@ -30,10 +40,22 @@ function Navigation() {
                         ))}
                     </NavDropdown>
                 </Nav>
+                <Form className="d-flex" onSubmit={handleSearchSubmit}>
+                    <Form.Control
+                        type="text"
+                        placeholder="Search"
+                        value={searchValue}
+                        onChange={event => setSearchValue(event.target.value)}
+                    />
+                    <Button variant="outline-light" type="submit">
+                        <Icon size={1} path={mdiMagnify} />
+                    </Button>
+                </Form>
             </Navbar.Collapse>
         </Navbar>
     );
 }
 
 export default Navigation;
+
 

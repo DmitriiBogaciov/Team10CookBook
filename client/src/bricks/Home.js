@@ -5,7 +5,6 @@ function Home() {
     return (
         <div>
             <h2>Welcome to Smoothie Station</h2>
-            <Navigation />
         </div>
     );
 }
