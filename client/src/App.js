@@ -1,58 +1,24 @@
+// App.js
 import './App.css';
-import RecipeList from "./bricks/RecipeList"
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useState, useEffect } from "react";
-import Icon from "@mdi/react";
-import { mdiLoading } from "@mdi/js";
-import styles from "./css/recipeList.module.css";
+import { BrowserRouter as Router, Link, Routes, Route } from 'react-router-dom';
+import Home from './bricks/Home';
+import Recipes from './bricks/Recipes';
+import CategoryRecipes from "./bricks/CategoryRecipes";
 
 function App() {
-  const [recipeLoadCall, setRecipeLoadCall] = useState({
-    state: "pending",
-  });
-
-  useEffect(() => {
-    fetch(`http://localhost:3000/recipe/list`, {
-      method: "GET",
-    }).then(async (response) => {
-      const responseJson = await response.json();
-      if (response.status >= 400) {
-        setRecipeLoadCall({ state: "error", error: responseJson });
-      } else {
-        setRecipeLoadCall({ state: "success", data: responseJson });
-      }
-    });
-  }, []);
-
-  function getChild() {
-    switch (recipeLoadCall.state) {
-      case "pending":
-        return (
-            <div className={styles.loading}>
-              <Icon size={2} path={mdiLoading} spin={true} />
+    return (
+        <Router>
+            <div className="App">
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/recipes" element={<Recipes />} />
+                    <Route path="/category/:categoryId" element={<CategoryRecipes />} />
+                </Routes>
             </div>
-        );
-      case "success":
-        return (
-            <>
-              <RecipeList recipeList={recipeLoadCall.data} />
-            </>
-        );
-      case "error":
-        return (
-            <div className={styles.error}>
-              <div>Failed to load recipe data.</div>
-              <br />
-              <pre>{JSON.stringify(recipeLoadCall.error, null, 2)}</pre>
-            </div>
-        );
-      default:
-        return null;
-    }
-  }
+        </Router>
 
-  return <div className="App">{getChild()}</div>;
+    );
 }
-
 
 export default App;

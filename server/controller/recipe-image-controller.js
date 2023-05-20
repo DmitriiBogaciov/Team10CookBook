@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const Busboy = require("busboy");
+const Busboy = require('busboy');
 const CreateAbl = require("../abl/recipe-image/create-abl");
 const GetAbl = require("../abl/recipe-image/get-abl");
 
