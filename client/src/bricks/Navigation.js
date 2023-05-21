@@ -25,6 +25,7 @@ function Navigation() {
 
     return (
         <Navbar bg="dark" variant="dark" expand="md">
+            <Navbar.Brand as={Link} to="/" className="ml-auto mr-3" style={{ marginLeft: '7px' }}>Smoothie Station</Navbar.Brand>
             <Navbar.Toggle aria-controls="navbar-nav" />
             <Navbar.Collapse id="navbar-nav">
                 <Nav className="mr-auto">
@@ -57,5 +58,3 @@ function Navigation() {
 }
 
 export default Navigation;
-
-

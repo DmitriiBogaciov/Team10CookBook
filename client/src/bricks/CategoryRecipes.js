@@ -15,7 +15,6 @@ function CategoryRecipes() {
 
   return (
     <div>
-      <h2>Recipes of Category</h2>
       <RecipeList recipeList={recipes} />
     </div>
   );
