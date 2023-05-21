@@ -6,6 +6,8 @@ import App from './App';
 import Home from "./bricks/Home";
 import Recipes from "./bricks/Recipes";
 import CategoryRecipes from "./bricks/CategoryRecipes";
+import RecipePage from "./bricks/RecipePage";
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -17,6 +19,7 @@ root.render(
                     <Route index element={<Home />} />
                     <Route path="/recipes" element={<Recipes />} />
                     <Route path="/category/:categoryId" element={<CategoryRecipes />} />
+                    <Route path="/recipe/:id" element={<RecipePage />} />
                 </Route>
             </Routes>
         </BrowserRouter>

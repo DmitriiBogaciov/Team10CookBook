@@ -1,0 +1,28 @@
+.recipe-page {
+    max-width: 1200px;
+    margin: auto;
+    padding: 2rem;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.recipe-page img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    display: block;
+    margin: auto;
+}
+
+.container {
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container .row .col-4 {
+    font-size: 1.125rem;
+    color: #4a4a4a;
+    text-align: center;
+}

@@ -12,6 +12,7 @@ const port = 8000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/storage/recipe-image', express.static(path.join(__dirname, 'storage/recipe-image')));
+app.use('/storage/Images', express.static(path.join(__dirname, 'storage/Images')));
 
 app.get("/", (req, res)=> {
     res.send("Hello World");

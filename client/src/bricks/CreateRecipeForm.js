@@ -279,7 +279,7 @@ function CreateRecipeForm() {
             </Modal>
             <Icon
                 path={mdiPlus}
-                style={{ color: "black", cursor: "pointer", alignSelf: 'center', marginRight: '8px'}}
+                style={{ color: "whitesmoke", cursor: "pointer", alignSelf: 'center', marginRight: '8px'}}
                 size={1.3}
                 onClick={handleShowModal}
             />

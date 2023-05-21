@@ -4,6 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import RecipeDetail from "./RecipeDetail";
 import Button from "react-bootstrap/Button";
 import "../css/recipeGridList.css"
+import {Link} from "react-router-dom";
 
 function RecipeGridList(props) {
     const [show, setShow] = useState(false);
@@ -24,13 +25,13 @@ function RecipeGridList(props) {
                         className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4"
                     >
                         <Card>
+                            <Link to={`/recipe/${recipe.id}`} className="text-decoration-none text-dark">
                             <Card.Img
                                 variant="top"
                                 className="recipe-card-img"
                                 style={{
                                     backgroundImage: `url(http://localhost:8000/storage/recipe-image/${recipe.imageId}.png)`,
                                 }}
-                                alt="{props.recipe.name}"
                                 onClick={() => handleShow(recipe)}
                             />
                             <Card.Title style={{ marginLeft: "10px" }}>
@@ -41,7 +42,7 @@ function RecipeGridList(props) {
                                     {recipe.description}
                                 </div>
                             </Card.Body>
-
+                            </Link>
                         </Card>
 
                         <Modal

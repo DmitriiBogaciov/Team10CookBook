@@ -10,7 +10,7 @@ function Recipes() {
     });
 
     useEffect(() => {
-        fetch('http://localhost:3000/recipe/list', {
+        fetch('/recipe/list', {
             method: 'GET',
         })
             .then(async (response) => {
