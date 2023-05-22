@@ -2,6 +2,8 @@ const path = require("path");
 const Ajv = require("ajv");
 const RecipeDao = require("../../dao/recipe-dao")
 const dao = new RecipeDao(path.join(__dirname, "..", "..", "storage", "recipe.json"))
+const fs = require("fs");
+
 
 const ajv = new Ajv();
 
@@ -26,6 +28,18 @@ function DeleteAbl(req, res) {
         }
         const recipeId = req.body.id;
         dao.delete(recipeId);
+
+
+        // Удаление картинки
+        const imagePath = path.join(__dirname, "..", "..", "storage", "recipe-image", `${res.body.imageId}.png`);
+        fs.unlink(imagePath, (err) => {
+            if (err) {
+                console.error(err);
+            } else {
+                console.log(`Image ${res.body.imageId}.png deleted successfully.`);
+            }
+        });
+
         res.json({
             message: `Recipe with id ${recipeId} deleted successfully.`
         });

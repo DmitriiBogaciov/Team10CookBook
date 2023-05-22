@@ -1,8 +1,28 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
 import '../css/home.css'
+import RecipeGridList from "./RecipeGridList";
 
 function Home() {
+    const [recipeLoadCall, setRecipeLoadCall] = useState({
+        state: 'pending',
+    });
+
+    useEffect(() => {
+        fetch('/recipe/list', {
+            method: 'GET',
+        })
+            .then(async (response) => {
+                const responseJson = await response.json();
+                if (response.status >= 400) {
+                    setRecipeLoadCall({ state: 'error', error: responseJson });
+                } else {
+                    setRecipeLoadCall({ state: 'success', data: responseJson });
+                }
+            })
+            .catch((error) => {
+                setRecipeLoadCall({ state: 'error', error: error.message });
+            });
+    }, []);
     return (
         <div className="home">
             <div className="home-container">
@@ -14,9 +34,7 @@ function Home() {
             </div>
             <h3>Popular Recipes</h3>
             <ul>
-                <li><Link to="/recipe/1">Strawberry Banana Smoothie</Link></li>
-                <li><Link to="/recipe/2">Blueberry Blast Smoothie</Link></li>
-                <li><Link to="/recipe/3">Green Detox Smoothie</Link></li>
+                {recipeLoadCall.state === 'success' && <RecipeGridList recipeList={recipeLoadCall.data} />}
             </ul>
         </div>
     );
