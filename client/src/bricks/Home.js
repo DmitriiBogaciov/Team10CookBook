@@ -32,8 +32,8 @@ function Home() {
                     <h3 className="home-subtitle">We offer delicious and healthy smoothies made from 100% organic ingredients. Try one of our recipes today!</h3>
                 </div>
             </div>
-            <h3>Popular Recipes</h3>
-            <ul>
+            <h3 style={{marginTop: '10px'}}>Popular Recipes</h3>
+            <ul style={{marginTop: '10px'}}>
                 {recipeLoadCall.state === 'success' && <RecipeGridList recipeList={recipeLoadCall.data} />}
             </ul>
         </div>

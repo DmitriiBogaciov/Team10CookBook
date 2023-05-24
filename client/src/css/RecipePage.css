@@ -29,7 +29,7 @@ label {
 }
 
 .rating > label {
-    color: #ddd;
+    color: lightblue;
     float: right;
 }
 
@@ -79,6 +79,7 @@ label {
 .recipe-page {
     display: flex;
     flex-direction: row;
+    margin-top: 10px;
 }
 
 .left-column {
@@ -113,8 +114,7 @@ label {
 .recipe-ingredients {
     margin-bottom: 10px;
     max-width: 400px;
-    text-align: center;
-    margin: 0 auto; /* Добавьте это свойство для центрирования содержимого */
+    text-align: left;
 }
 
 
@@ -123,8 +123,50 @@ label {
 }
 
 .grey-space {
-    background-color: rgba(128, 128, 128, 0.1);
+    background-color: rgba(128, 128, 128, 0.02);
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 10px;
+    border-color: rgba(128, 128, 128, 0.1);
+    border-style: ridge;
+    text-align: left;
 }
+
+@media (max-width: 768px) {
+    .recipe-page {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .left-column,
+    .right-column {
+        width: 100%;
+    }
+}
+
+.button-delete {
+    margin-right: 10px;
+    border-color: #EC6161;
+    background-color: antiquewhite;
+    color: black;
+    border-radius: 20px;
+}
+
+.button-edit {
+    border-color: #94B9EE;
+    background-color: antiquewhite;
+    color: black;
+    border-radius: 20px;
+}
+
+.ingredient-amount {
+    display: inline-block;
+    margin-left: 10px; /* Измените значение отступа по вашему усмотрению */
+}
+
+@media (min-width: 768px) {
+    .ingredient-amount {
+        margin-left: 40px; /* Увеличьте значение отступа по вашему усмотрению */
+    }
+}
+

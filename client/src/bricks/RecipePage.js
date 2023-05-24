@@ -287,10 +287,11 @@ function RecipePage() {
                             {recipe.ingredientList.map((ingredient, index) => {
                                 const ingredientData = ingredients.find((ing) => ing.id === ingredient.id);
                                 return (
-                                    <div className="row" key={index}>
-                                        <div className="col-sm">{ingredientData ? ingredientData.name : ''}</div>
-                                        <div className="col-sm">{ingredient.amount}</div>
-                                        <div className="col-sm">{ingredient.unit}</div>
+                                    <div className="row ingredient-row" key={index}>
+                                        <div className="col-sm">
+                                            <span>{ingredientData ? ingredientData.name : ''}</span>
+                                            <span className="ingredient-amount">{ingredient.amount} {ingredient.unit}</span>
+                                        </div>
                                     </div>
                                 );
                             })}
@@ -304,10 +305,10 @@ function RecipePage() {
                 <div className="row">
                     <div className="col-12">
                         <div style={{ display: 'flex', justifyContent: 'right' }}>
-                            <Button variant="danger" size="sm" onClick={handleShowDeleteModal}>
+                            <Button className="button-delete" size="sm" onClick={handleShowDeleteModal}>
                                 Delete
                             </Button>
-                            <Button variant="primary" size="sm" onClick={handleShowEditModal}>
+                            <Button className="button-edit" size="sm" onClick={handleShowEditModal}>
                                 Edit
                             </Button>
                         </div>

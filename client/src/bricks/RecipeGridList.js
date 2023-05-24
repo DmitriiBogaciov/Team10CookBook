@@ -1,8 +1,5 @@
-import React, {useState} from "react"
+import React from "react"
 import Card from "react-bootstrap/Card";
-import Modal from "react-bootstrap/Modal";
-import RecipeDetail from "./RecipeDetail";
-import Button from "react-bootstrap/Button";
 import "../css/recipeGridList.css"
 import {Link} from "react-router-dom";
 

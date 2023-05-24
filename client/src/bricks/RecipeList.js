@@ -14,7 +14,7 @@ function RecipeList(props) {
 
     return (
         <div>
-            <Navbar bg="light">
+            <Navbar>
                 <div className="container-fluid">
                     <div>
                             <Button
