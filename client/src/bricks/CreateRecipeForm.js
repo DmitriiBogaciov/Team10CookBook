@@ -124,6 +124,8 @@ function CreateRecipeForm() {
             ingredientList: ingredients,
             categoryIdList: categories,
             method: method,
+            averageRating: 0,
+            ratingCount: 0,
         };
 
         const recipeResponse = await fetch('/recipe/create', {

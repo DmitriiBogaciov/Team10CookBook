@@ -10,7 +10,7 @@ function UpdateRecipeForm({show, onHide, recipe, onSuccess}) {
     const [description, setDescription] = useState(recipe.description);
     const [method, setMethod] = useState(recipe.method);
     const [image, setImage] = useState(null);
-    const [categories, setCategories] = useState(recipe.categoryIdList.map(categoryId => ({ id: categoryId })));
+    const [categories, setCategories] = useState(recipe.categoryIdList.map((categoryId) => categoryId))
     const [ingredients, setIngredients] = useState(recipe.ingredientList);
 
     useEffect(() => {
@@ -75,8 +75,8 @@ function UpdateRecipeForm({show, onHide, recipe, onSuccess}) {
     }
 
     const handleCategoryChange = (index, value) => {
-        const newCategories = JSON.parse(JSON.stringify(categories));
-        newCategories[index] = { id: value };
+        const newCategories = [...categories];
+        newCategories[index] = value;
         setCategories(newCategories);
     };
 
@@ -240,7 +240,7 @@ function UpdateRecipeForm({show, onHide, recipe, onSuccess}) {
                                 <Form.Group key={index} className="mb-3">
                                     <div className="d-flex">
                                         <Form.Select
-                                            value={category.id}
+                                            value={category}
                                             size="sm"
                                             style={{ maxWidth: '250px' }}
                                             onChange={(e) => handleCategoryChange(index, e.target.value)}

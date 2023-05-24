@@ -38,7 +38,7 @@ async function CreateAbl(req, res) {
         const averageRating = ratingSum / ratingCount;
 
         const recipe = await daoRecipe.get(req.body.recipeId);
-        recipe.ratingValue = averageRating;
+        recipe.averageRating = averageRating;
         recipe.ratingCount = ratingCount;
 
         await daoRecipe.update(recipe);
