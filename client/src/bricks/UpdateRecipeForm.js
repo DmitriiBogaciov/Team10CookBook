@@ -1,8 +1,10 @@
 import {Form, Modal, Button} from 'react-bootstrap';
 import React, { useState, useEffect, useMemo } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 
 function UpdateRecipeForm({show, onHide, recipe, onSuccess}) {
+    const navigate = useNavigate();
     const [ingredientList, setIngredientList] = useState([]);
     const [categoryList, setCategoryList] = useState([]);
 
@@ -131,11 +133,15 @@ function UpdateRecipeForm({show, onHide, recipe, onSuccess}) {
         if (!recipeResponse.ok) {
             throw new Error('Failed to update recipe');
         } else {
-            onSuccess();
+            const recipeData = await recipeResponse.json();
+            console.log(recipeData);
+            window.location.reload(); // Перезагрузка страницы
         }
 
         const recipeData = await recipeResponse.json();
         console.log(recipeData);
+
+        navigate(`/recipe/${recipe.id}`);
 
     };
 

@@ -75,3 +75,56 @@ label {
     color: #4a4a4a;
     text-align: center;
 }
+
+.recipe-page {
+    display: flex;
+    flex-direction: row;
+}
+
+.left-column {
+    flex-basis: 40%;
+    padding-right: 20px;
+    text-align: left;
+}
+
+.right-column {
+    flex-basis: 60%;
+}
+
+.recipe-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.recipe-image {
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.recipe-rating {
+    margin-bottom: 10px;
+}
+
+.recipe-description {
+    margin-bottom: 10px;
+}
+
+.recipe-ingredients {
+    margin-bottom: 10px;
+    max-width: 400px;
+    text-align: center;
+    margin: 0 auto; /* Добавьте это свойство для центрирования содержимого */
+}
+
+
+.recipe-method {
+    margin-bottom: 10px;
+}
+
+.grey-space {
+    background-color: rgba(128, 128, 128, 0.1);
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
