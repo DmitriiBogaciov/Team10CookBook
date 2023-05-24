@@ -53,6 +53,11 @@ class RatingDao {
         const averageRating = ratingSum / ratingList.length;
         return averageRating.toFixed(1);
     }
+
+    getRatingsByRecipeId(recipeId) {
+        const ratingList = this._listAll();
+        return ratingList.filter(item => item.recipeId === recipeId);
+    }
 }
 
 module.exports = RatingDao;

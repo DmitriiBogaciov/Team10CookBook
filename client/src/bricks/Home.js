@@ -8,7 +8,7 @@ function Home() {
     });
 
     useEffect(() => {
-        fetch('/recipe/list', {
+        fetch('/recipe/listBest', {
             method: 'GET',
         })
             .then(async (response) => {

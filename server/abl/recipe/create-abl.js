@@ -28,6 +28,8 @@ const schema = {
                 required: ["id", "amount", "unit"],
             },
         },
+        ratingValue: { type: "array", items: { type: "number" } },
+        ratingCount: { type: "number" },
     },
     required: ["name", "description", "categoryIdList", "imageId", "ingredientList", "method"],
     additionalProperties: false,

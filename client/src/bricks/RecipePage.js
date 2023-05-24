@@ -12,6 +12,8 @@ function RecipePage() {
     const [isDeleteModalShown, setDeleteModalShow] = useState(false);
     const [categories, setCategories] = useState([]);
     const [ingredients, setIngredients] = useState([]);
+    const [rating, setRating] = useState(null);
+    const [isRated, setIsRated] = useState(false);
 
     const handleShowEditModal = () => setEditModalShow(true);
     const handleCloseEditModal = () => setEditModalShow(false);
@@ -85,6 +87,28 @@ function RecipePage() {
         }
     };
 
+    const handleRateRecipe = async (ratingValue) => {
+        try {
+            const response = await fetch('/rating/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ recipeId: recipe.id, value: ratingValue }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to rate recipe');
+            }
+
+            // Обновить состояние
+            setRating(ratingValue);
+            setIsRated(true);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     if (!recipe) {
         return <div>Loading...</div>;
     }
@@ -118,6 +142,21 @@ function RecipePage() {
             </div>
             <h4>Method of preparation</h4>
             <p>{recipe.method}</p>
+            <div>
+                {/* Отображение оценки, если она уже была установлена */}
+                {isRated ? (
+                    <p>Your rating: {rating} stars</p>
+                ) : (
+                    // Кнопки для оценки
+                    <div>
+                        <Button variant="outline-secondary" onClick={() => handleRateRecipe(1)}>1 star</Button>{' '}
+                        <Button variant="outline-secondary" onClick={() => handleRateRecipe(2)}>2 stars</Button>{' '}
+                        <Button variant="outline-secondary" onClick={() => handleRateRecipe(3)}>3 stars</Button>{' '}
+                        <Button variant="outline-secondary" onClick={() => handleRateRecipe(4)}>4 stars</Button>{' '}
+                        <Button variant="outline-secondary" onClick={() => handleRateRecipe(5)}>5 stars</Button>
+                    </div>
+                )}
+            </div>
             <div className="row">
                 <div className="col-12">
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>

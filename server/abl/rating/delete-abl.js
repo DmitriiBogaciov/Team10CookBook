@@ -15,7 +15,7 @@ const schema = {
     additionalProperties: false,
 }
 
-function CreateAbl(req, res) {
+function DeleteAbl(req, res) {
     try{
         const valid = ajv.validate(schema, req.body);
         if(!valid) {
@@ -34,4 +34,4 @@ function CreateAbl(req, res) {
     }
 }
 
-module.exports = CreateAbl
+module.exports = DeleteAbl;

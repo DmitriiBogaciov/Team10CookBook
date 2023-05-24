@@ -3,7 +3,7 @@ const CreateAbl = require("../abl/rating/create-abl");
 const ListAbl = require("../abl/rating/list-abl");
 const GetAbl = require("../abl/rating/get-abl");
 const DeleteAbl = require("../abl/rating/delete-abl")
-const GetAverageRating = require("../abl/rating/getRecipeAverageRating-abl")
+const GetRecipeAverageRatingAbl = require("../abl/rating/getRecipeAverageRating-abl")
 
 const router = express.Router();
 
@@ -17,7 +17,7 @@ router.get("/get", (req, res) => {
 })
 
 router.get("/getRecipeAverageRating", (req, res) => {
-    GetAverageRating(req, res);
+    GetRecipeAverageRatingAbl(req, res);
 })
 
 router.post("/create", (req, res) => {

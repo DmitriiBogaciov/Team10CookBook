@@ -3,7 +3,7 @@ const Ajv = require("ajv");
 const RatingDao = require("../../dao/rating-dao");
 const dao = new RatingDao(path.join(__dirname, "..", "..", "storage", "rating.json"));
 
-function GetAbl(req, res) {
+function GetRecipeAverageRatingAbl(req, res) {
     try {
         const rating = dao.getRecipeAverageRating(req.query.recipeId);
         if (!rating) {
@@ -19,4 +19,4 @@ function GetAbl(req, res) {
     }
 }
 
-module.exports = GetAbl;
+module.exports = GetRecipeAverageRatingAbl;

@@ -32,7 +32,7 @@ const schema = {
             ]
         }
     },
-    required: ["id"],
+    required: ["name", "description", "categoryIdList", "imageId", "ingredientList", "method"],
     additionalProperties: false,
 }
 
