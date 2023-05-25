@@ -4,14 +4,6 @@ import "../css/recipeGridList.css"
 import {Link} from "react-router-dom";
 
 function RecipeGridList(props) {
-    // const [show, setShow] = useState(false);
-    // const [selectedRecipe, setSelectedRecipe] = useState(null);
-
-    // const handleClose = () => setShow(false);
-    // const handleShow = (recipe) => {
-    //     setSelectedRecipe(recipe);
-    //     setShow(true)
-    // }
 
     return (
         <div className="row">
@@ -29,9 +21,8 @@ function RecipeGridList(props) {
                                 style={{
                                     backgroundImage: `url(http://localhost:8000/storage/recipe-image/${recipe.imageId}.png)`,
                                 }}
-                                // onClick={() => handleShow(recipe)}
                             />
-                            <Card.Title style={{ marginLeft: "10px" }}>
+                            <Card.Title style={{ marginLeft: "10px", marginTop: '10px' }}>
                                 {recipe.name}
                             </Card.Title>
                             <Card.Body>
@@ -42,24 +33,6 @@ function RecipeGridList(props) {
                             </Card.Body>
                             </Link>
                         </Card>
-
-                        {/*<Modal*/}
-                        {/*    show={show && selectedRecipe === recipe}*/}
-                        {/*    onHide={handleClose}*/}
-                        {/*>*/}
-                        {/*    <Modal.Header closeButton>*/}
-                        {/*    </Modal.Header>*/}
-                        {/*    <Modal.Body>*/}
-                        {/*        <RecipeDetail*/}
-                        {/*            recipe={recipe}*/}
-                        {/*            onSuccess = {handleClose}/>*/}
-                        {/*    </Modal.Body>*/}
-                        {/*    <Modal.Footer>*/}
-                        {/*        <Button variant="secondary" onClick={handleClose}>*/}
-                        {/*            Close*/}
-                        {/*        </Button>*/}
-                        {/*    </Modal.Footer>*/}
-                        {/*</Modal>*/}
                     </div>
                 );
             })}

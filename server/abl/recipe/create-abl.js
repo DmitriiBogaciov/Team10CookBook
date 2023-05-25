@@ -22,7 +22,7 @@ const schema = {
                 type: "object",
                 properties: {
                     id: { type: "string", minLength: 1},
-                    amount: { type: "number"},
+                    amount: { type: "number", minLength: 1, minimum: 1, maximum: 99999},
                     unit: { type: "string", minLength: 1 },
                 },
                 required: ["id", "amount", "unit"],

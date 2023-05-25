@@ -3,7 +3,6 @@
     /*margin: auto;*/
     /*padding: 2rem;*/
     font-family: Arial, sans-serif;
-    text-align: center;
 }
 .home-container {
     position: relative;
@@ -12,6 +11,7 @@
     padding-bottom: 56.25%; /* 16:9 Aspect Ratio (divide 9 by 16 = 0.5625) */
     overflow: hidden;
     margin-left: 0; /* Добавьте эту строку, чтобы убрать отступ слева */
+    text-align: center;
 }
 
 .home-bg-image {

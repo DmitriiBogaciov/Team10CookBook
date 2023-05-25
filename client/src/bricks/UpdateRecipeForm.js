@@ -152,7 +152,7 @@ function UpdateRecipeForm({show, onHide, recipe, onSuccess}) {
                       style={{ maxWidth: "600px" }}
                       className="mx-auto">
                     <Modal.Header closeButton>
-                        <Modal.Title>Create recipe</Modal.Title>
+                        <Modal.Title>Update recipe</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Form.Group className="mb-3">
