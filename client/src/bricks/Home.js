@@ -26,7 +26,7 @@ function Home() {
     return (
         <div className="home">
             <div className="home-container">
-                <img className="home-bg-image" src={`http://localhost:8000/storage/Images/MainImage.png`} alt="Main Image"/>
+                <img className="home-bg-image" src={`http://localhost:8000/storage/Images/MainImage.png`} alt="Main"/>
                 <div className="home-text">
                     <h1 className="home-title">Welcome to Smoothie Station</h1>
                     <h3 className="home-subtitle">We offer delicious and healthy smoothies made from 100% organic ingredients. Try one of our recipes today!</h3>
